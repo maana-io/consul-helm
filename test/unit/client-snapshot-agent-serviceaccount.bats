@@ -4,17 +4,17 @@ load _helpers
 
 @test "client/SnapshotAgentServiceAccount: disabled by default" {
   cd `chart_dir`
-  local actual=$(helm template \
-      -x templates/client-snapshot-agent-serviceaccount.yaml  \
-      . | tee /dev/stderr |
-      yq 'length > 0' | tee /dev/stderr)
-  [ "${actual}" = "false" ]
+  run helm3 template \
+      -s templates/client-snapshot-agent-serviceaccount.yaml \
+      .
+  [ "$status" -eq 1 ]
+  [[ "$output" =~ "Error: could not find template" ]]
 }
 
 @test "client/SnapshotAgentServiceAccount: enabled with client.snapshotAgent.enabled=true" {
   cd `chart_dir`
-  local actual=$(helm template \
-      -x templates/client-snapshot-agent-serviceaccount.yaml  \
+  local actual=$(helm3 template \
+      -s templates/client-snapshot-agent-serviceaccount.yaml  \
       --set 'client.snapshotAgent.enabled=true' \
       . | tee /dev/stderr |
       yq 'length > 0' | tee /dev/stderr)
@@ -23,8 +23,8 @@ load _helpers
 
 @test "client/SnapshotAgentServiceAccount: enabled with client.enabled=true and client.snapshotAgent.enabled=true" {
   cd `chart_dir`
-  local actual=$(helm template \
-      -x templates/client-snapshot-agent-serviceaccount.yaml  \
+  local actual=$(helm3 template \
+      -s templates/client-snapshot-agent-serviceaccount.yaml  \
       --set 'client.enabled=true' \
       --set 'client.snapshotAgent.enabled=true' \
       . | tee /dev/stderr |
@@ -34,13 +34,13 @@ load _helpers
 
 @test "client/SnapshotAgentServiceAccount: disabled with client=false and client.snapshotAgent.enabled=true" {
   cd `chart_dir`
-  local actual=$(helm template \
-      -x templates/client-snapshot-agent-serviceaccount.yaml  \
+  run helm3 template \
+      -s templates/client-snapshot-agent-serviceaccount.yaml  \
       --set 'client.snapshotAgent.enabled=true' \
       --set 'client.enabled=false' \
-      . | tee /dev/stderr |
-      yq 'length > 0' | tee /dev/stderr)
-  [ "${actual}" = "false" ]
+      .
+  [ "$status" -eq 1 ]
+  [[ "$output" =~ "Error: could not find template" ]]
 }
 
 #--------------------------------------------------------------------
@@ -48,8 +48,8 @@ load _helpers
 
 @test "client/SnapshotAgentServiceAccount: can set image pull secrets" {
   cd `chart_dir`
-  local object=$(helm template \
-      -x templates/client-snapshot-agent-serviceaccount.yaml  \
+  local object=$(helm3 template \
+      -s templates/client-snapshot-agent-serviceaccount.yaml  \
       --set 'client.snapshotAgent.enabled=true' \
       --set 'global.imagePullSecrets[0].name=my-secret' \
       --set 'global.imagePullSecrets[1].name=my-secret2' \
