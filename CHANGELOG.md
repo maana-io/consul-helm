@@ -1,5 +1,36 @@
 ## Unreleased
 
+DEPRECATIONS
+
+* Setting resources via YAML string is now deprecated. Instead, set directly as YAML.
+  This affects `client.resources`, `server.resources` and `meshGateway.resources`.
+  To set directly as YAML, simply remove the pipe (`|`) character that defines
+  the YAML as a string: 
+  
+  Before:
+  ```yaml
+  client:
+    resources: |
+      requests:
+        memory: "128Mi"
+        cpu: "250m"
+      limits:
+        memory: "256Mi"
+        cpu: "500m"
+  ```
+  
+  After:
+  ```yaml
+  client:
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "250m"
+      limits:
+        memory: "256Mi"
+        cpu: "500m"
+  ```
+
 ## 0.21.0 (May 14, 2020)
 
 FEATURES
