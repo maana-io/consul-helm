@@ -125,8 +125,15 @@ spec:
             {{- end }}
               mountPath: /consul/tls/ca
               readOnly: true
+            {{- end }}
           {{- end }}
-          {{- end }}
+          resources:
+            requests:
+              memory: "50Mi"
+              cpu: "50m"
+            limits:
+              memory: "50Mi"
+              cpu: "50m"
       {{- if (or (or .Values.global.acls.manageSystemACLs .Values.global.bootstrapACLs) (and .Values.global.tls.enabled .Values.global.tls.enableAutoEncrypt)) }}
       initContainers:
       {{- if (or .Values.global.acls.manageSystemACLs .Values.global.bootstrapACLs) }}
@@ -142,6 +149,13 @@ spec:
         volumeMounts:
           - name: aclconfig
             mountPath: /consul/aclconfig
+        resources:
+          requests:
+            memory: "25Mi"
+            cpu: "50m"
+          limits:
+            memory: "25Mi"
+            cpu: "50m"
       {{- end }}
       {{- if (and .Values.global.tls.enabled .Values.global.tls.enableAutoEncrypt) }}
       {{- include "consul.getAutoEncryptClientCA" . | nindent 6 }}

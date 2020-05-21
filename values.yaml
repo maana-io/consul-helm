@@ -251,10 +251,14 @@ server:
   # via the extraConfig setting.
   connect: true
 
-  # Resource requests, limits, etc. for the server cluster placement. This
-  # should map directly to the value of the resources field for a PodSpec.
-  # By default no direct resource request is made.
-  resources: null
+  # Resource settings for Server agents.
+  resources:
+    requests:
+      memory: "100Mi"
+      cpu: "100m"
+    limits:
+      memory: "100Mi"
+      cpu: "100m"
 
   # updatePartition is used to control a careful rolling update of Consul
   # servers. This should be done particularly when changing the version
@@ -409,10 +413,14 @@ client:
   # also changes the clients' advertised IP to the hostIP rather than podIP.
   exposeGossipPorts: false
 
-  # Resource requests, limits, etc. for the client cluster placement. This
-  # should map directly to the value of the resources field for a PodSpec.
-  # By default no direct resource request is made.
-  resources: null
+  # Resource settings for Client agents.
+  resources:
+    requests:
+      memory: "100Mi"
+      cpu: "100m"
+    limits:
+      memory: "100Mi"
+      cpu: "100m"
 
   # extraConfig is a raw string of extra configuration to set with the
   # client. This should be JSON.
@@ -968,11 +976,11 @@ meshGateway:
 
   resources:
     requests:
-      memory: "128Mi"
-      cpu: "250m"
+      memory: "100Mi"
+      cpu: "100m"
     limits:
-      memory: "256Mi"
-      cpu: "500m"
+      memory: "100Mi"
+      cpu: "100m"
 
   # By default, we set an anti affinity so that two gateway pods won't be
   # on the same node. NOTE: Gateways require that Consul client agents are
