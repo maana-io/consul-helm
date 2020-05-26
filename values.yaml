@@ -862,6 +862,21 @@ connectInject:
     proxyDefaults: |
       {}
 
+  sidecarProxy:
+    # Set default resources for sidecar proxy. If null, that resource won't
+    # be set.
+    resources:
+      limits:
+        # Recommended default: 100Mi
+        memory: null
+        # Recommended default: 100m
+        cpu: null
+      requests:
+        # Recommended default: 100Mi
+        memory: null
+        # Recommended default: 100m
+        cpu: null
+
 # Mesh Gateways enable Consul Connect to work across Consul datacenters.
 meshGateway:
   # If mesh gateways are enabled, a Deployment will be created that runs
