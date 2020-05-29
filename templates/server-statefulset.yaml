@@ -55,7 +55,7 @@ spec:
       terminationGracePeriodSeconds: 30
       serviceAccountName: {{ template "consul.fullname" . }}-server
       securityContext:
-        fsGroup: 1000
+        # fsGroup: 1000
       volumes:
         - name: config
           configMap:
